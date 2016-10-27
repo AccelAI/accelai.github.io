@@ -1,5 +1,5 @@
 /*
-	Landed by HTML5 UP
+	Solid State by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
@@ -7,98 +7,25 @@
 /* Basic */
 
 	body {
-		color: #ffffff;
+		-ms-behavior: url("assets/js/backgroundsize.min.htc");
 	}
 
-	body, html, #page-wrapper {
-		height: 100%;
+/* Type */
+
+	h1.major, h2.major, h3.major, h4.major, h5.major, h6.major {
+		border-bottom: solid 2px #ffffff;
 	}
 
 	blockquote {
-		border-left: solid 4px #606067;
+		border-left: solid 4px #ffffff;
 	}
 
 	code {
-		background: #32333b;
+		border: solid 2px #ffffff;
 	}
 
 	hr {
-		border-bottom: solid 1px #606067;
-	}
-
-/* Icon */
-
-	.icon.major {
-		-ms-behavior: url("assets/js/ie/PIE.htc");
-	}
-
-/* Image */
-
-	.image {
-		position: relative;
-		-ms-behavior: url("assets/js/ie/PIE.htc");
-	}
-
-		.image:before {
-			display: none;
-		}
-
-		.image img {
-			position: relative;
-			-ms-behavior: url("assets/js/ie/PIE.htc");
-		}
-
-/* Form */
-
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	select,
-	textarea {
-		position: relative;
-		-ms-behavior: url("assets/js/ie/PIE.htc");
-	}
-
-		input[type="text"]:focus,
-		input[type="password"]:focus,
-		input[type="email"]:focus,
-		select:focus,
-		textarea:focus {
-			-ms-behavior: url("assets/js/ie/PIE.htc");
-		}
-
-	input[type="text"],
-	input[type="password"],
-	input[type="email"] {
-		line-height: 3em;
-	}
-
-	input[type="checkbox"],
-	input[type="radio"] {
-		font-size: 3em;
-	}
-
-		input[type="checkbox"] + label:before,
-		input[type="radio"] + label:before {
-			display: none;
-		}
-
-/* Table */
-
-	table tbody tr {
-		border: solid 1px #606067;
-	}
-
-	table thead {
-		border-bottom: solid 1px #606067;
-	}
-
-	table tfoot {
-		border-top: solid 1px #606067;
-	}
-
-	table.alt tbody tr td {
-		border: solid 1px #606067;
+		border-bottom: solid 2px #ffffff;
 	}
 
 /* Button */
@@ -106,89 +33,131 @@
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
+	button,
 	.button {
-		border: solid 1px #ffffff !important;
+		position: relative;
+		-ms-behavior: url("assets/js/ie/PIE.htc");
+		border: solid 2px #ffffff;
 	}
 
 		input[type="submit"].special,
 		input[type="reset"].special,
 		input[type="button"].special,
+		button.special,
 		.button.special {
-			border: 0 !important;
+			border: 0;
 		}
 
-/* Goto Next */
+/* Form */
 
-	.goto-next {
-		display: none;
-	}
-
-/* Spotlight */
-
-	.spotlight {
-		height: 100%;
-	}
-
-		.spotlight .content {
-			background: #272833;
-		}
-
-/* Wrapper */
-
-	.wrapper.style2 input[type="text"]:focus,
-	.wrapper.style2 input[type="password"]:focus,
-	.wrapper.style2 input[type="email"]:focus,
-	.wrapper.style2 select:focus,
-	.wrapper.style2 textarea:focus {
-		border-color: #ffffff;
-	}
-
-	.wrapper.style2 input[type="submit"].special:hover, .wrapper.style2 input[type="submit"].special:active,
-	.wrapper.style2 input[type="reset"].special:hover,
-	.wrapper.style2 input[type="reset"].special:active,
-	.wrapper.style2 input[type="button"].special:hover,
-	.wrapper.style2 input[type="button"].special:active,
-	.wrapper.style2 .button.special:hover,
-	.wrapper.style2 .button.special:active {
-		color: #e44c65 !important;
-	}
-
-/* Dropotron */
-
-	.dropotron {
-		background: #272833;
-		box-shadow: none !important;
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	input[type="tel"],
+	select,
+	textarea {
+		position: relative;
 		-ms-behavior: url("assets/js/ie/PIE.htc");
+		background: transparent;
+		border: solid 2px #ffffff;
 	}
 
-		.dropotron > li a, .dropotron > li span {
-			color: #ffffff !important;
+/* Table */
+
+	table tbody tr {
+		border: solid 1px #ffffff;
+		border-left: 0;
+		border-right: 0;
+	}
+
+	table.alt tbody tr td {
+		border: solid 1px #ffffff;
+		border-left-width: 0;
+		border-top-width: 0;
+	}
+
+		table.alt tbody tr td:first-child {
+			border-left-width: 1px;
 		}
 
-		.dropotron.level-0 {
+	table.alt tbody tr:first-child td {
+		border-top-width: 1px;
+	}
+
+	table.alt thead {
+		border-bottom: 0;
+	}
+
+	table.alt tfoot {
+		border-top: 0;
+	}
+
+/* Features */
+
+	.features article {
+		-ms-behavior: url("assets/js/ie/PIE.htc");
+		position: relative;
+		width: 44%;
+	}
+
+		.features article .image {
 			margin-top: 0;
+			margin-left: 0;
+			width: 100%;
 		}
 
-			.dropotron.level-0:before {
-				display: none;
-			}
+/* Menu */
+
+	#menu {
+		background: #2e3141;
+	}
+
+		#menu h2 {
+			border-bottom: solid 2px #ffffff;
+		}
 
 /* Header */
 
 	#header {
-		background: #272833;
+		background-color: #353849;
 	}
+
+/* Wrapper */
+
+	.wrapper {
+		margin: 0;
+	}
+
+		.wrapper:before, .wrapper:after {
+			display: none;
+		}
+
+		.wrapper.spotlight .image {
+			-ms-behavior: url("assets/js/ie/PIE.htc");
+		}
+
+			.wrapper.spotlight .image img {
+				position: relative;
+				-ms-behavior: url("assets/js/ie/PIE.htc");
+			}
 
 /* Banner */
 
-	#banner {
-		height: 100%;
+	#banner .logo .icon {
+		border: solid 2px #ffffff;
+		-ms-behavior: url("assets/js/ie/PIE.htc");
 	}
 
-		#banner:before {
-			height: 100%;
-		}
+	#banner h2 {
+		border-bottom: solid 2px #ffffff;
+	}
 
-		#banner:after {
-			background-image: url("images/ie/banner-overlay.png");
+/* Footer */
+
+	#footer .inner .copyright {
+		border-top: solid 2px #ffffff;
+	}
+
+		#footer .inner .copyright li {
+			border-left: solid 2px #ffffff;
 		}

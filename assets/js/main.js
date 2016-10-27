@@ -1,23 +1,27 @@
 /*
-	Landed by HTML5 UP
+	Solid State by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
 (function($) {
 
+	"use strict";
+
 	skel.breakpoints({
-		xlarge: '(max-width: 1680px)',
-		large: '(max-width: 1280px)',
-		medium: '(max-width: 980px)',
-		small: '(max-width: 736px)',
-		xsmall: '(max-width: 480px)'
+		xlarge:	'(max-width: 1680px)',
+		large:	'(max-width: 1280px)',
+		medium:	'(max-width: 980px)',
+		small:	'(max-width: 736px)',
+		xsmall:	'(max-width: 480px)'
 	});
 
 	$(function() {
 
 		var	$window = $(window),
-			$body = $('body');
+			$body = $('body'),
+			$header = $('#header'),
+			$banner = $('#banner');
 
 		// Disable animations/transitions until the page has loaded.
 			$body.addClass('is-loading');
@@ -25,12 +29,8 @@
 			$window.on('load', function() {
 				window.setTimeout(function() {
 					$body.removeClass('is-loading');
-				}, 0);
+				}, 100);
 			});
-
-		// Touch mode.
-			if (skel.vars.mobile)
-				$body.addClass('is-touch');
 
 		// Fix: Placeholder polyfill.
 			$('form').placeholder();
@@ -43,263 +43,123 @@
 				);
 			});
 
-		// Scrolly links.
-			$('.scrolly').scrolly({
-				speed: 2000
-			});
+		// Header.
+			if (skel.vars.IEVersion < 9)
+				$header.removeClass('alt');
 
-		// Dropdowns.
-			$('#nav > ul').dropotron({
-				alignment: 'right',
-				hideDelay: 350
-			});
+			if ($banner.length > 0
+			&&	$header.hasClass('alt')) {
 
-		// Off-Canvas Navigation.
+				$window.on('resize', function() { $window.trigger('scroll'); });
 
-			// Title Bar.
-				$(
-					'<div id="titleBar">' +
-						'<a href="#navPanel" class="toggle"></a>' +
-						'<span class="title">' + $('#logo').html() + '</span>' +
-					'</div>'
-				)
-					.appendTo($body);
-
-			// Navigation Panel.
-				$(
-					'<div id="navPanel">' +
-						'<nav>' +
-							$('#nav').navList() +
-						'</nav>' +
-					'</div>'
-				)
-					.appendTo($body)
-					.panel({
-						delay: 500,
-						hideOnClick: true,
-						hideOnSwipe: true,
-						resetScroll: true,
-						resetForms: true,
-						side: 'left',
-						target: $body,
-						visibleClass: 'navPanel-visible'
-					});
-
-			// Fix: Remove navPanel transitions on WP<10 (poor/buggy performance).
-				if (skel.vars.os == 'wp' && skel.vars.osVersion < 10)
-					$('#titleBar, #navPanel, #page-wrapper')
-						.css('transition', 'none');
-
-		// Parallax.
-		// Disabled on IE (choppy scrolling) and mobile platforms (poor performance).
-			if (skel.vars.browser == 'ie'
-			||	skel.vars.mobile) {
-
-				$.fn._parallax = function() {
-
-					return $(this);
-
-				};
-
-			}
-			else {
-
-				$.fn._parallax = function() {
-
-					$(this).each(function() {
-
-						var $this = $(this),
-							on, off;
-
-						on = function() {
-
-							$this
-								.css('background-position', 'center 0px');
-
-							$window
-								.on('scroll._parallax', function() {
-
-									var pos = parseInt($window.scrollTop()) - parseInt($this.position().top);
-
-									$this.css('background-position', 'center ' + (pos * -0.15) + 'px');
-
-								});
-
-						};
-
-						off = function() {
-
-							$this
-								.css('background-position', '');
-
-							$window
-								.off('scroll._parallax');
-
-						};
-
-						skel.on('change', function() {
-
-							if (skel.breakpoint('medium').active)
-								(off)();
-							else
-								(on)();
-
-						});
-
-					});
-
-					return $(this);
-
-				};
-
-				$window
-					.on('load resize', function() {
-						$window.trigger('scroll');
-					});
+				$banner.scrollex({
+					bottom:		$header.outerHeight(),
+					terminate:	function() { $header.removeClass('alt'); },
+					enter:		function() { $header.addClass('alt'); },
+					leave:		function() { $header.removeClass('alt'); }
+				});
 
 			}
 
-		// Spotlights.
-			var $spotlights = $('.spotlight');
+		// Menu.
+			var $menu = $('#menu');
 
-			$spotlights
-				._parallax()
-				.each(function() {
+			$menu._locked = false;
 
-					var $this = $(this),
-						on, off;
+			$menu._lock = function() {
 
-					on = function() {
+				if ($menu._locked)
+					return false;
 
-						// Use main <img>'s src as this spotlight's background.
-							$this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
+				$menu._locked = true;
 
-						// Enable transitions (if supported).
-							if (skel.canUse('transition')) {
+				window.setTimeout(function() {
+					$menu._locked = false;
+				}, 350);
 
-								var top, bottom, mode;
+				return true;
 
-								// Side-specific scrollex tweaks.
-									if ($this.hasClass('top')) {
+			};
 
-										mode = 'top';
-										top = '-20%';
-										bottom = 0;
+			$menu._show = function() {
 
-									}
-									else if ($this.hasClass('bottom')) {
+				if ($menu._lock())
+					$body.addClass('is-menu-visible');
 
-										mode = 'bottom-only';
-										top = 0;
-										bottom = '20%';
+			};
 
-									}
-									else {
+			$menu._hide = function() {
 
-										mode = 'middle';
-										top = 0;
-										bottom = 0;
+				if ($menu._lock())
+					$body.removeClass('is-menu-visible');
 
-									}
+			};
 
-								// Add scrollex.
-									$this.scrollex({
-										mode:		mode,
-										top:		top,
-										bottom:		bottom,
-										initialize:	function(t) { $this.addClass('inactive'); },
-										terminate:	function(t) { $this.removeClass('inactive'); },
-										enter:		function(t) { $this.removeClass('inactive'); },
+			$menu._toggle = function() {
 
-										// Uncomment the line below to "rewind" when this spotlight scrolls out of view.
+				if ($menu._lock())
+					$body.toggleClass('is-menu-visible');
 
-										//leave:	function(t) { $this.addClass('inactive'); },
+			};
 
-									});
+			$menu
+				.appendTo($body)
+				.on('click', function(event) {
 
-							}
+					event.stopPropagation();
 
-					};
+					// Hide.
+						$menu._hide();
 
-					off = function() {
+				})
+				.find('.inner')
+					.on('click', '.close', function(event) {
 
-						// Clear spotlight's background.
-							$this.css('background-image', '');
+						event.preventDefault();
+						event.stopPropagation();
+						event.stopImmediatePropagation();
 
-						// Disable transitions (if supported).
-							if (skel.canUse('transition')) {
+						// Hide.
+							$menu._hide();
 
-								// Remove scrollex.
-									$this.unscrollex();
+					})
+					.on('click', function(event) {
+						event.stopPropagation();
+					})
+					.on('click', 'a', function(event) {
 
-							}
+						var href = $(this).attr('href');
 
-					};
+						event.preventDefault();
+						event.stopPropagation();
 
-					skel.on('change', function() {
+						// Hide.
+							$menu._hide();
 
-						if (skel.breakpoint('medium').active)
-							(off)();
-						else
-							(on)();
+						// Redirect.
+							window.setTimeout(function() {
+								window.location.href = href;
+							}, 350);
 
 					});
 
-				});
+			$body
+				.on('click', 'a[href="#menu"]', function(event) {
 
-		// Wrappers.
-			var $wrappers = $('.wrapper');
+					event.stopPropagation();
+					event.preventDefault();
 
-			$wrappers
-				.each(function() {
+					// Toggle.
+						$menu._toggle();
 
-					var $this = $(this),
-						on, off;
+				})
+				.on('keydown', function(event) {
 
-					on = function() {
-
-						if (skel.canUse('transition')) {
-
-							$this.scrollex({
-								top:		250,
-								bottom:		0,
-								initialize:	function(t) { $this.addClass('inactive'); },
-								terminate:	function(t) { $this.removeClass('inactive'); },
-								enter:		function(t) { $this.removeClass('inactive'); },
-
-								// Uncomment the line below to "rewind" when this wrapper scrolls out of view.
-
-								//leave:	function(t) { $this.addClass('inactive'); },
-
-							});
-
-						}
-
-					};
-
-					off = function() {
-
-						if (skel.canUse('transition'))
-							$this.unscrollex();
-
-					};
-
-					skel.on('change', function() {
-
-						if (skel.breakpoint('medium').active)
-							(off)();
-						else
-							(on)();
-
-					});
+					// Hide on escape.
+						if (event.keyCode == 27)
+							$menu._hide();
 
 				});
-
-		// Banner.
-			var $banner = $('#banner');
-
-			$banner
-				._parallax();
 
 	});
 
